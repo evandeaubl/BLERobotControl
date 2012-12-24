@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BLE.h"
 
-@interface BRCViewController : UIViewController
+@interface BRCViewController : UIViewController<BLEDelegate> {
+	@private
+	BLE *_ble;
+	IBOutlet UIButton *_connectButton;
+}
+
+- (IBAction)changeThrottle:(id)sender;
+- (IBAction)changeDirection:(id)sender;
+- (IBAction)chargeButton:(id)sender;
+- (IBAction)connectButton:(id)sender;
 
 @end
