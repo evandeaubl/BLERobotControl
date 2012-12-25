@@ -31,11 +31,31 @@
 }
 
 - (void)changeThrottle:(id)sender {
+    UInt8 buf[3] = {0x01, 0x00, 0x00};
 	
+	UISlider *slider = (UISlider *)sender;
+	float value = slider.value;
+	
+	buf[1] = (UInt8)((value - .5) * 255);
+	
+	NSLog(@"Writing throttle value: %d\n", buf[1]);
+	
+    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
+    [_ble write:data];
 }
 
 - (void)changeDirection:(id)sender {
+    UInt8 buf[3] = {0x02, 0x00, 0x00};
 	
+	UISlider *slider = (UISlider *)sender;
+	float value = slider.value;
+	
+	buf[1] = (UInt8)((value - .5) * 255);
+	
+	NSLog(@"Writing direction value: %d\n", buf[1]);
+	
+    NSData *data = [[NSData alloc] initWithBytes:buf length:3];
+    [_ble write:data];
 }
 
 - (void)chargeButton:(id)sender {
@@ -43,6 +63,16 @@
     
     NSData *data = [[NSData alloc] initWithBytes:buf length:3];
     [_ble write:data];
+}
+
+- (void)stopButton:(id)sender {
+	[_throttleSlider setValue:0.5 animated:YES];
+	[_throttleSlider sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)straightButton:(id)sender {
+	[_directionSlider setValue:0.5 animated:YES];
+	[_directionSlider sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 - (void)connectButton:(id)sender {
@@ -60,11 +90,11 @@
 
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	[self BLEConnect];
-    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:(float)5.0 target:self selector:@selector(connectionTimer:) userInfo:nil repeats:NO];
 }
 
 - (void)BLEConnect {
-    [_ble findBLEPeripherals:2];
+    [_ble findBLEPeripherals:5];
 }
 
 - (void)BLEDisconnect {

@@ -13,11 +13,15 @@
 	@private
 	BLE *_ble;
 	IBOutlet UIButton *_connectButton;
+	IBOutlet UISlider *_throttleSlider;
+	IBOutlet UISlider *_directionSlider;
 }
 
 - (IBAction)changeThrottle:(id)sender;
 - (IBAction)changeDirection:(id)sender;
 - (IBAction)chargeButton:(id)sender;
 - (IBAction)connectButton:(id)sender;
+- (IBAction)stopButton:(id)sender;
+- (IBAction)straightButton:(id)sender;
 
 @end
